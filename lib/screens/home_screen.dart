@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -27,12 +27,13 @@ class _HomeScreenState extends State<HomeScreen> {
       //   print('Time: ${mapCampeonato['team']}'
       //       ' Posição: ${mapCampeonato['row']}');
       // }
+      // ignore: empty_catches
     } catch (e) {}
+    setState(() {});
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     teams();
   }
@@ -53,9 +54,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ListTile(
                   trailing: Text(
                     '${tabela['pnt']}',
-                    style: TextStyle(fontWeight: FontWeight.w700),
+                    style: const TextStyle(fontWeight: FontWeight.w400),
                   ),
-                  title: Text(tabela['team']),
+                  title: Text(
+                    tabela['team'],
+                    style: const TextStyle(fontWeight: FontWeight.w700),
+                  ),
                   leading: CircleAvatar(
                     backgroundColor: Colors.transparent,
                     child:
