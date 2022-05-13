@@ -23,11 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
       Map<String, dynamic> dados = json;
       final mapCampeonato = dados['response']['standings']['rows'];
       _list = mapCampeonato;
-      // for (var mapCampeonato in _list) {
-      //   print('Time: ${mapCampeonato['team']}'
-      //       ' Posição: ${mapCampeonato['row']}');
-      // }
-      // ignore: empty_catches
     } catch (e) {}
     setState(() {});
   }
@@ -50,24 +45,40 @@ class _HomeScreenState extends State<HomeScreen> {
             itemCount: _list.length,
             itemBuilder: (context, i) {
               final tabela = _list[i];
-              return Card(
-                child: ListTile(
-                  trailing: Text(
-                    '${tabela['pnt']}',
-                    style: const TextStyle(fontWeight: FontWeight.w400),
-                  ),
-                  title: Text(
-                    tabela['team'],
-                    style: const TextStyle(fontWeight: FontWeight.w700),
-                  ),
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    child:
-                        Image.network('${imageLink + tabela['teamScId']}.png'),
-                  ),
-                ),
-              );
+              return CardTeam(tabela: tabela, imageLink: imageLink);
             }),
+      ),
+    );
+  }
+}
+
+class CardTeam extends StatelessWidget {
+  CardTeam({
+    Key? key,
+    required this.tabela,
+    required this.imageLink,
+  }) : super(key: key);
+
+  var tabela;
+  final String imageLink;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        trailing: Text(
+          '${tabela['pnt']}',
+          style: const TextStyle(fontWeight: FontWeight.w400),
+        ),
+        title: Text(
+          tabela['team'],
+          style: const TextStyle(fontWeight: FontWeight.w700),
+        ),
+        subtitle: Text('Jogos: ${tabela['p']}'),
+        leading: CircleAvatar(
+          backgroundColor: Colors.transparent,
+          child: Image.network('${imageLink + tabela['teamScId']}.png'),
+        ),
       ),
     );
   }
