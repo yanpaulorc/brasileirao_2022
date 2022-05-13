@@ -45,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
             itemCount: _list.length,
             itemBuilder: (context, i) {
               final tabela = _list[i];
+              // return ExpansionTile(title: Text('Teste'));
               return CardTeam(tabela: tabela, imageLink: imageLink);
             }),
       ),
@@ -65,21 +66,47 @@ class CardTeam extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: ListTile(
+      child: ExpansionTile(
+        children: [
+          SizedBox(
+            height: 30,
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _textExpanded('Vitórias', 'w', Colors.green.shade600),
+                  _textExpanded('Empates', 'd', Colors.grey.shade600),
+                  _textExpanded('Derrotas', 'l', Colors.red.shade600),
+                ],
+              ),
+            ),
+          )
+        ],
         trailing: Text(
           '${tabela['pnt']}',
-          style: const TextStyle(fontWeight: FontWeight.w400),
+          style: const TextStyle(fontWeight: FontWeight.w500),
         ),
         title: Text(
           tabela['team'],
-          style: const TextStyle(fontWeight: FontWeight.w700),
+          style: const TextStyle(fontWeight: FontWeight.w900),
         ),
-        subtitle: Text('Jogos: ${tabela['p']}'),
+        subtitle: Text(
+          'Jogos: ${tabela['p']}',
+          style: const TextStyle(fontWeight: FontWeight.w500),
+        ),
         leading: CircleAvatar(
           backgroundColor: Colors.transparent,
           child: Image.network('${imageLink + tabela['teamScId']}.png'),
         ),
       ),
+    );
+  }
+
+  Text _textExpanded(String texto, String titulo, Color color) {
+    return Text(
+      '$texto: ${tabela[titulo]}',
+      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12, color: color),
     );
   }
 }
